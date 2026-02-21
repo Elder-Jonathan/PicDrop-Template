@@ -3,38 +3,398 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>Droppic NFC</title>
-  <link rel="stylesheet" href="/droppicnfc/Assets/app.css" />
+  <title>Droppic NFC • Product 1</title>
+
+  <!-- =========================
+       SINGLE-FILE CSS
+       ========================= -->
+  <style>
+    :root{
+      --auburn-blue:#0C2340;
+      --auburn-orange:#E87722;
+
+      --bg:#0b1220;
+      --bg2:#0a1020;
+
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.04);
+
+      --text:#e9eefc;
+      --muted:#b9c3dd;
+
+      --border: rgba(255,255,255,.12);
+      --border2: rgba(255,255,255,.16);
+
+      --shadow: 0 18px 46px rgba(0,0,0,.35);
+      --shadow2: 0 10px 28px rgba(0,0,0,.32);
+
+      --radius-xl:22px;
+      --radius-lg:18px;
+      --radius-md:14px;
+
+      --tap: 52px;
+
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-top: env(safe-area-inset-top, 0px);
+
+      --maxw: 1060px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+
+    body{
+      margin:0;
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:
+        radial-gradient(1200px 700px at 12% 8%, rgba(232,119,34,.18), transparent 58%),
+        radial-gradient(900px 600px at 90% 16%, rgba(12,35,64,.55), transparent 56%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      color: var(--text);
+    }
+
+    /* ===== Forced preview modes (manual toggle) ===== */
+    body[data-preview="mobile"] .container{
+      max-width: 430px; /* iPhone-ish width */
+    }
+    body[data-preview="desktop"] .container{
+      max-width: var(--maxw);
+    }
+
+    /* ===== Layout ===== */
+    .container{
+      max-width: var(--maxw);
+      margin:0 auto;
+      padding: calc(14px + var(--safe-top)) 14px calc(110px + var(--safe-bottom));
+    }
+
+    .topbar{
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding: 12px 0;
+      background: linear-gradient(180deg, rgba(11,18,32,.82), rgba(11,18,32,.35));
+      backdrop-filter: blur(12px);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width: 0;
+    }
+
+    .mark{
+      width:42px;height:42px;
+      display:grid;place-items:center;
+      border-radius: 16px;
+      border: 2px solid var(--auburn-orange);
+      background: linear-gradient(135deg, rgba(232,119,34,.22), rgba(12,35,64,.55));
+      box-shadow: var(--shadow2);
+      font-weight: 950;
+      letter-spacing: .5px;
+      flex: 0 0 auto;
+    }
+
+    .titleBlock{ min-width:0; }
+    .title{
+      font-weight: 950;
+      font-size: 15px;
+      line-height: 1.15;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .subtitle{
+      margin-top: 4px;
+      font-size: 13px;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .meta{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex: 0 0 auto;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      height: 30px;
+      padding: 0 10px;
+      border-radius: 999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .pill--accent{
+      background: rgba(232,119,34,.18);
+      border-color: rgba(232,119,34,.40);
+      color: var(--text);
+    }
+
+    .iconBtn{
+      width:44px;height:44px;
+      border-radius: 16px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      box-shadow: var(--shadow2);
+      -webkit-tap-highlight-color: transparent;
+      user-select:none;
+    }
+    .iconBtn:active{ transform: translateY(1px); }
+
+    .card{
+      background: linear-gradient(180deg, var(--card), var(--card2));
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      padding: 16px;
+    }
+
+    .hero h1{
+      margin: 6px 0 8px;
+      font-size: 28px;
+      letter-spacing: -0.25px;
+    }
+    .hero p{
+      margin: 0 0 14px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top: 10px;
+    }
+
+    .btn{
+      min-height: var(--tap);
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      font-weight: 950;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+      user-select:none;
+    }
+    .btn:active{ transform: translateY(1px); }
+
+    .btnPrimary{
+      border: none;
+      color:#0a1020;
+      background: linear-gradient(135deg, var(--auburn-orange), rgba(232,119,34,.75));
+    }
+    .btnSecondary{
+      border: 1px solid rgba(232,119,34,.35);
+      background: linear-gradient(135deg, rgba(12,35,64,.85), rgba(12,35,64,.55));
+    }
+    .btnGhost{
+      background: rgba(255,255,255,.06);
+    }
+
+    hr.sep{
+      border:none;
+      border-top:1px solid rgba(255,255,255,.10);
+      margin:14px 0;
+    }
+
+    .grid{
+      margin-top: 14px;
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 14px;
+    }
+
+    /* Real responsive breakpoint */
+    @media (max-width: 860px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .notes{
+      margin: 10px 0 0 18px;
+      color: var(--muted);
+      padding: 0;
+    }
+    .notes li{ margin-bottom: 8px; }
+
+    /* Bottom bar (phone-first) */
+    .bottomBar{
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 30;
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      padding: 10px 10px calc(10px + var(--safe-bottom));
+      background: rgba(11,18,32,.86);
+      border-top: 1px solid var(--border);
+      backdrop-filter: blur(14px);
+    }
+
+    .bottomItem{
+      min-height: 58px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      text-decoration:none;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap: 4px;
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+      user-select:none;
+    }
+    .bottomItem:active{ transform: translateY(1px); }
+
+    .bottomItemPrimary{
+      background: linear-gradient(135deg, var(--auburn-orange), rgba(232,119,34,.72));
+      border: none;
+      color: #0a1020;
+    }
+
+    .bottomIcon{ font-size: 18px; line-height: 1; }
+    .bottomLabel{ font-size: 11px; font-weight: 950; }
+
+    /* Toast */
+    .toast{
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: calc(98px + var(--safe-bottom));
+      z-index: 40;
+      background: rgba(0,0,0,.75);
+      color: #fff;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow: var(--shadow2);
+      max-width: calc(100% - 30px);
+      text-align:center;
+    }
+
+    /* Preview panel (for you, not guests) */
+    .previewPanel{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      margin-top: 10px;
+    }
+    .previewLabel{
+      font-weight: 900;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* Accessibility */
+    :focus-visible{
+      outline: 3px solid rgba(232,119,34,.55);
+      outline-offset: 2px;
+    }
+  </style>
 </head>
-<body data-page="product">
+
+<body data-preview="auto">
+  <!-- =========================
+       EMBEDDED JSON CONFIG
+       Edit only this block for Product1
+       ========================= -->
+  <script id="droppic-config" type="application/json">
+  {
+    "productId": "product1",
+    "title": "Droppic Product 1",
+    "subtitle": "Tap Upload to submit your photos/videos.",
+    "uploadUrl": "PASTE_DROPBOX_FILE_REQUEST_LINK_HERE",
+    "notes": [
+      "You do NOT need a Dropbox account to upload.",
+      "Videos upload best on Wi-Fi.",
+      "If upload fails, try again after the video finishes processing."
+    ]
+  }
+  </script>
 
   <main class="container">
     <header class="topbar">
       <div class="brand">
         <div class="mark" aria-hidden="true">D</div>
         <div class="titleBlock">
-          <div id="title" class="title">Droppic NFC</div>
+          <div id="title" class="title">Droppic</div>
           <div id="subtitle" class="subtitle">Upload your photos here.</div>
         </div>
       </div>
-      <div id="productId" class="muted"></div>
+
+      <div class="meta">
+        <div id="productPill" class="pill pill--accent">product1</div>
+
+        <!-- Manual preview toggle for YOU -->
+        <button id="mobileBtn" class="iconBtn" type="button" aria-label="Force mobile view">📱</button>
+        <button id="desktopBtn" class="iconBtn" type="button" aria-label="Force desktop view">🖥️</button>
+        <button id="autoBtn" class="iconBtn" type="button" aria-label="Auto responsive view">⚡</button>
+      </div>
     </header>
 
-    <section class="card">
-      <div class="stack">
-        <a id="uploadBtn" class="btn btnPrimary" href="#" target="_blank" rel="noopener">
-          Upload Photos (Dropbox)
-        </a>
+    <section class="card hero">
+      <h1 id="headline">Welcome 👋</h1>
+      <p id="desc">This is a single-file prototype (HTML + CSS + JSON + JS). Once you like the look, we’ll split it back into assets.</p>
 
-        <button id="shareBtn" class="btn" type="button">Share</button>
-        <button id="copyBtn" class="btn" type="button">Copy Page Link</button>
-        <button id="copyUploadBtn" class="btn" type="button">Copy Upload Link</button>
+      <div class="actions">
+        <a id="uploadBtn" class="btn btnPrimary" href="#" target="_blank" rel="noopener">Upload Photos (Dropbox)</a>
+        <button id="shareBtn" class="btn btnSecondary" type="button">Share</button>
+        <button id="copyBtn" class="btn btnGhost" type="button">Copy Page Link</button>
+        <button id="copyUploadBtn" class="btn btnGhost" type="button">Copy Upload Link</button>
       </div>
 
-      <hr class="sep"/>
+      <div class="previewPanel" aria-hidden="true">
+        <span class="previewLabel">Preview:</span>
+        <span class="pill" id="previewState">auto</span>
+      </div>
+    </section>
 
-      <div class="muted">Notes</div>
-      <ul id="notes" class="notes muted"></ul>
+    <section class="grid">
+      <section class="card">
+        <div class="pill">Notes</div>
+        <ul id="notes" class="notes"></ul>
+      </section>
+
+      <section class="card">
+        <div class="pill">Status</div>
+        <p class="subtitle" style="white-space:normal;">
+          Upload link set: <strong id="uploadStatus">no</strong><br/>
+          Page link: <strong id="pageUrl">—</strong>
+        </p>
+        <hr class="sep" />
+        <p class="subtitle" style="white-space:normal;">
+          Tip: When you’re ready, we’ll move the CSS/JS back into <code>assets/</code> and replicate this for product2..product15.
+        </p>
+      </section>
     </section>
   </main>
 
@@ -43,22 +403,164 @@
       <span class="bottomIcon" aria-hidden="true">⤴</span>
       <span class="bottomLabel">Upload</span>
     </a>
-
     <button id="bbShare" class="bottomItem" type="button">
       <span class="bottomIcon" aria-hidden="true">⇪</span>
       <span class="bottomLabel">Share</span>
     </button>
-
     <button id="bbCopy" class="bottomItem" type="button">
       <span class="bottomIcon" aria-hidden="true">⧉</span>
       <span class="bottomLabel">Copy</span>
     </button>
+    <button id="bbMore" class="bottomItem" type="button">
+      <span class="bottomIcon" aria-hidden="true">⋯</span>
+      <span class="bottomLabel">More</span>
+    </button>
   </nav>
 
-  <div id="toast" class="toast" hidden></div>
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
 
-  <script src="../assets/app.js"></script>
+  <!-- =========================
+       SINGLE-FILE JS
+       ========================= -->
+  <script>
+    const $ = (sel) => document.querySelector(sel);
+
+    // Toast
+    let toastTimer = null;
+    function toast(msg, ms=1400){
+      const el = $("#toast");
+      if(!el) return;
+      el.textContent = msg;
+      el.hidden = false;
+      if(toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => (el.hidden = true), ms);
+    }
+    function haptic(){ if(navigator.vibrate) navigator.vibrate(12); }
+
+    function safeUrl(url){
+      try { return new URL(url).toString(); }
+      catch { return ""; }
+    }
+    function pageUrl(){ return window.location.href.split("?")[0]; }
+
+    async function copyText(text){
+      try{
+        await navigator.clipboard.writeText(text);
+        haptic();
+        toast("Copied!");
+        return true;
+      }catch{
+        toast("Copy failed — use address bar");
+        return false;
+      }
+    }
+
+    async function shareLink(payload){
+      try{
+        if(navigator.share){
+          await navigator.share(payload);
+          haptic();
+          return true;
+        }
+      }catch{}
+      return false;
+    }
+
+    function readConfig(){
+      const raw = $("#droppic-config")?.textContent || "{}";
+      try { return JSON.parse(raw); }
+      catch { return {}; }
+    }
+
+    function setHref(el, href){
+      const u = safeUrl(href);
+      if(!u){
+        el.setAttribute("href", "#");
+        el.setAttribute("aria-disabled", "true");
+        el.onclick = (e) => e.preventDefault();
+      } else {
+        el.removeAttribute("aria-disabled");
+        el.setAttribute("href", u);
+        el.onclick = null;
+      }
+      return !!u;
+    }
+
+    function setPreviewMode(mode){
+      // mode: auto | mobile | desktop
+      document.body.dataset.preview = mode;
+      $("#previewState").textContent = mode;
+      toast(`Preview: ${mode}`);
+    }
+
+    function init(){
+      const cfg = readConfig();
+
+      // Header text
+      $("#title").textContent = cfg.title || "Droppic";
+      $("#subtitle").textContent = cfg.subtitle || "Upload your photos here.";
+      $("#productPill").textContent = cfg.productId || "product1";
+
+      // Hero headline
+      $("#headline").textContent = "Welcome 👋";
+      $("#desc").textContent = "Tap Upload to send your photos/videos. This MVP is optimized for phone uploads.";
+
+      // Links
+      const uploadOk1 = setHref($("#uploadBtn"), cfg.uploadUrl || "");
+      const uploadOk2 = setHref($("#bbUpload"), cfg.uploadUrl || "");
+      $("#uploadStatus").textContent = (uploadOk1 && uploadOk2) ? "yes" : "no";
+
+      // Notes
+      const notes = $("#notes");
+      notes.innerHTML = "";
+      (cfg.notes || []).forEach(t => {
+        const li = document.createElement("li");
+        li.textContent = t;
+        notes.appendChild(li);
+      });
+
+      // Status block
+      $("#pageUrl").textContent = pageUrl();
+
+      // Share/copy actions
+      const sharePayload = {
+        title: cfg.title || "Droppic",
+        text: "Upload photos here:",
+        url: pageUrl()
+      };
+
+      $("#shareBtn").onclick = async () => {
+        const ok = await shareLink(sharePayload);
+        if(!ok){
+          await copyText(sharePayload.url);
+          toast("Share not supported — link copied");
+        }
+      };
+      $("#bbShare").onclick = $("#shareBtn").onclick;
+
+      $("#copyBtn").onclick = () => copyText(sharePayload.url);
+      $("#bbCopy").onclick = $("#copyBtn").onclick;
+
+      $("#copyUploadBtn").onclick = async () => {
+        const u = safeUrl(cfg.uploadUrl || "");
+        if(!u){ toast("Upload link not set"); return; }
+        await copyText(u);
+      };
+
+      $("#bbMore").onclick = () => {
+        toast("MVP: add more actions later");
+      };
+
+      // Preview toggle for you
+      $("#mobileBtn").onclick = () => setPreviewMode("mobile");
+      $("#desktopBtn").onclick = () => setPreviewMode("desktop");
+      $("#autoBtn").onclick = () => setPreviewMode("auto");
+
+      // Default: auto
+      setPreviewMode("auto");
+    }
+
+    init();
+  </script>
 </body>
-
 </html>
-

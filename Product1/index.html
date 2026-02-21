@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Droppic NFC</title>
+  <link rel="stylesheet" href="../assets/app.css" />
+</head>
+<body data-page="product">
+
+  <main class="container">
+    <header class="topbar">
+      <div class="brand">
+        <div class="mark" aria-hidden="true">D</div>
+        <div class="titleBlock">
+          <div id="title" class="title">Droppic NFC</div>
+          <div id="subtitle" class="subtitle">Upload your photos here.</div>
+        </div>
+      </div>
+      <div id="productId" class="muted"></div>
+    </header>
+
+    <section class="card">
+      <div class="stack">
+        <a id="uploadBtn" class="btn btnPrimary" href="#" target="_blank" rel="noopener">
+          Upload Photos (Dropbox)
+        </a>
+
+        <button id="shareBtn" class="btn" type="button">Share</button>
+        <button id="copyBtn" class="btn" type="button">Copy Page Link</button>
+        <button id="copyUploadBtn" class="btn" type="button">Copy Upload Link</button>
+      </div>
+
+      <hr class="sep"/>
+
+      <div class="muted">Notes</div>
+      <ul id="notes" class="notes muted"></ul>
+    </section>
+  </main>
+
+  <nav class="bottomBar" aria-label="Primary actions">
+    <a id="bbUpload" class="bottomItem bottomItemPrimary" href="#" target="_blank" rel="noopener">
+      <span class="bottomIcon" aria-hidden="true">⤴</span>
+      <span class="bottomLabel">Upload</span>
+    </a>
+
+    <button id="bbShare" class="bottomItem" type="button">
+      <span class="bottomIcon" aria-hidden="true">⇪</span>
+      <span class="bottomLabel">Share</span>
+    </button>
+
+    <button id="bbCopy" class="bottomItem" type="button">
+      <span class="bottomIcon" aria-hidden="true">⧉</span>
+      <span class="bottomLabel">Copy</span>
+    </button>
+  </nav>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="../assets/app.js"></script>
+</body>
+</html>

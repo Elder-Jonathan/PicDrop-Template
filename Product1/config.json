@@ -1,0 +1,11 @@
+{
+  "productId": "product1",
+  "title": "Droppic Product 1",
+  "subtitle": "Tap Upload to submit your photos/videos.",
+  "uploadUrl": "PASTE_DROPBOX_FILE_REQUEST_LINK_HERE",
+  "notes": [
+    "You do NOT need a Dropbox account to upload.",
+    "Videos upload best on Wi-Fi.",
+    "If upload fails, try again after the video finishes processing."
+  ]
+}

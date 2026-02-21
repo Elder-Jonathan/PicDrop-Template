@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>Droppic NFC • Product 1</title>
+  <title>PicDrop • Product 1</title>
 
   <!-- =========================
        SINGLE-FILE CSS
@@ -53,19 +53,10 @@
       color: var(--text);
     }
 
-    /* ===== Forced preview modes (manual toggle) ===== */
-    body[data-preview="mobile"] .container{
-      max-width: 430px; /* iPhone-ish width */
-    }
-    body[data-preview="desktop"] .container{
-      max-width: var(--maxw);
-    }
-
-    /* ===== Layout ===== */
     .container{
       max-width: var(--maxw);
       margin:0 auto;
-      padding: calc(14px + var(--safe-top)) 14px calc(110px + var(--safe-bottom));
+      padding: calc(14px + var(--safe-top)) 14px calc(120px + var(--safe-bottom));
     }
 
     .topbar{
@@ -143,21 +134,6 @@
       color: var(--text);
     }
 
-    .iconBtn{
-      width:44px;height:44px;
-      border-radius: 16px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.08);
-      color: var(--text);
-      cursor:pointer;
-      display:grid;
-      place-items:center;
-      box-shadow: var(--shadow2);
-      -webkit-tap-highlight-color: transparent;
-      user-select:none;
-    }
-    .iconBtn:active{ transform: translateY(1px); }
-
     .card{
       background: linear-gradient(180deg, var(--card), var(--card2));
       border: 1px solid var(--border);
@@ -227,8 +203,6 @@
       grid-template-columns: 1.15fr .85fr;
       gap: 14px;
     }
-
-    /* Real responsive breakpoint */
     @media (max-width: 860px){
       .grid{ grid-template-columns: 1fr; }
     }
@@ -240,7 +214,23 @@
     }
     .notes li{ margin-bottom: 8px; }
 
-    /* Bottom bar (phone-first) */
+    .statusLine{
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+    code.k{
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.10);
+      padding: 2px 6px;
+      border-radius: 10px;
+      color: var(--text);
+      font-weight: 900;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 12px;
+    }
+
     .bottomBar{
       position: fixed;
       left: 0;
@@ -248,7 +238,7 @@
       bottom: 0;
       z-index: 30;
       display:grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 8px;
       padding: 10px 10px calc(10px + var(--safe-bottom));
       background: rgba(11,18,32,.86);
@@ -273,22 +263,19 @@
       user-select:none;
     }
     .bottomItem:active{ transform: translateY(1px); }
-
     .bottomItemPrimary{
       background: linear-gradient(135deg, var(--auburn-orange), rgba(232,119,34,.72));
       border: none;
       color: #0a1020;
     }
-
     .bottomIcon{ font-size: 18px; line-height: 1; }
     .bottomLabel{ font-size: 11px; font-weight: 950; }
 
-    /* Toast */
     .toast{
       position: fixed;
       left: 50%;
       transform: translateX(-50%);
-      bottom: calc(98px + var(--safe-bottom));
+      bottom: calc(106px + var(--safe-bottom));
       z-index: 40;
       background: rgba(0,0,0,.75);
       color: #fff;
@@ -300,21 +287,6 @@
       text-align:center;
     }
 
-    /* Preview panel (for you, not guests) */
-    .previewPanel{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
-      margin-top: 10px;
-    }
-    .previewLabel{
-      font-weight: 900;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    /* Accessibility */
     :focus-visible{
       outline: 3px solid rgba(232,119,34,.55);
       outline-offset: 2px;
@@ -322,21 +294,22 @@
   </style>
 </head>
 
-<body data-preview="auto">
+<body>
   <!-- =========================
        EMBEDDED JSON CONFIG
-       Edit only this block for Product1
        ========================= -->
-  <script id="droppic-config" type="application/json">
+  <script id="picdrop-config" type="application/json">
   {
-    "productId": "product1",
-    "title": "Droppic Product 1",
-    "subtitle": "Tap Upload to submit your photos/videos.",
-    "uploadUrl": "PASTE_DROPBOX_FILE_REQUEST_LINK_HERE",
+    "productId": "Product1",
+    "brand": "PicDrop",
+    "title": "PicDrop • Product 1",
+    "subtitle": "Tap Upload to share your photos/videos.",
+    "uploadUrl": "https://www.dropbox.com/scl/fo/wgiod5sln38d0ym268nuh/ADoSJVQHy0EPQ1e_OM4V4Ks?rlkey=tfhfj89n5htlstruhwt8vhtb2&st=wu6qikxy&dl=0",
+    "viewUrl": "https://www.dropbox.com/scl/fo/wgiod5sln38d0ym268nuh/ADoSJVQHy0EPQ1e_OM4V4Ks?rlkey=z26itm54dzsn3cin9ufgc2amd&st=wu6qikxy&dl=0",
     "notes": [
-      "You do NOT need a Dropbox account to upload.",
-      "Videos upload best on Wi-Fi.",
-      "If upload fails, try again after the video finishes processing."
+      "Tap Upload to add photos/videos from your phone.",
+      "If you upload a video, Wi-Fi is best.",
+      "Tap View if you want to see what’s already been uploaded."
     ]
   }
   </script>
@@ -344,55 +317,61 @@
   <main class="container">
     <header class="topbar">
       <div class="brand">
-        <div class="mark" aria-hidden="true">D</div>
+        <div class="mark" aria-hidden="true">P</div>
         <div class="titleBlock">
-          <div id="title" class="title">Droppic</div>
-          <div id="subtitle" class="subtitle">Upload your photos here.</div>
+          <div id="hdrTitle" class="title">PicDrop</div>
+          <div id="hdrSubtitle" class="subtitle">Tap Upload to share your photos/videos.</div>
         </div>
       </div>
 
       <div class="meta">
-        <div id="productPill" class="pill pill--accent">product1</div>
-
-        <!-- Manual preview toggle for YOU -->
-        <button id="mobileBtn" class="iconBtn" type="button" aria-label="Force mobile view">📱</button>
-        <button id="desktopBtn" class="iconBtn" type="button" aria-label="Force desktop view">🖥️</button>
-        <button id="autoBtn" class="iconBtn" type="button" aria-label="Auto responsive view">⚡</button>
+        <div id="productPill" class="pill pill--accent">Product1</div>
+        <div class="pill" id="linkState">Links: —</div>
       </div>
     </header>
 
     <section class="card hero">
       <h1 id="headline">Welcome 👋</h1>
-      <p id="desc">This is a single-file prototype (HTML + CSS + JSON + JS). Once you like the look, we’ll split it back into assets.</p>
+      <p id="desc">Tap Upload to add your photos. Tap View to see the folder.</p>
 
       <div class="actions">
-        <a id="uploadBtn" class="btn btnPrimary" href="#" target="_blank" rel="noopener">Upload Photos (Dropbox)</a>
-        <button id="shareBtn" class="btn btnSecondary" type="button">Share</button>
+        <a id="uploadBtn" class="btn btnPrimary" href="#" target="_blank" rel="noopener">Upload</a>
+        <a id="viewBtn" class="btn btnSecondary" href="#" target="_blank" rel="noopener">View</a>
+        <button id="shareBtn" class="btn btnGhost" type="button">Share Page</button>
         <button id="copyBtn" class="btn btnGhost" type="button">Copy Page Link</button>
         <button id="copyUploadBtn" class="btn btnGhost" type="button">Copy Upload Link</button>
       </div>
 
-      <div class="previewPanel" aria-hidden="true">
-        <span class="previewLabel">Preview:</span>
-        <span class="pill" id="previewState">auto</span>
-      </div>
+      <hr class="sep"/>
+
+      <div class="pill">Notes</div>
+      <ul id="notes" class="notes"></ul>
     </section>
 
     <section class="grid">
       <section class="card">
-        <div class="pill">Notes</div>
-        <ul id="notes" class="notes"></ul>
+        <div class="pill">Quick actions</div>
+        <p class="statusLine" style="margin:10px 0 0;">
+          • Upload link: <span id="uploadOk">—</span><br/>
+          • View link: <span id="viewOk">—</span><br/>
+          • This page: <code class="k" id="pageUrl">—</code>
+        </p>
+        <hr class="sep"/>
+        <p class="statusLine" style="margin:0;">
+          Tip: later we can replace the “Upload” link with a Dropbox <em>File Request</em> link if you want guests to upload without any Dropbox sign-in prompts.
+        </p>
       </section>
 
       <section class="card">
-        <div class="pill">Status</div>
-        <p class="subtitle" style="white-space:normal;">
-          Upload link set: <strong id="uploadStatus">no</strong><br/>
-          Page link: <strong id="pageUrl">—</strong>
+        <div class="pill">Troubleshooting</div>
+        <p class="statusLine" style="margin:10px 0 0;">
+          If a button does nothing:<br/>
+          • Make sure you opened this on <code class="k">github.io</code><br/>
+          • Try a hard refresh (Ctrl+Shift+R)
         </p>
-        <hr class="sep" />
-        <p class="subtitle" style="white-space:normal;">
-          Tip: When you’re ready, we’ll move the CSS/JS back into <code>assets/</code> and replicate this for product2..product15.
+        <hr class="sep"/>
+        <p class="statusLine" style="margin:0;">
+          If Dropbox prompts sign-in, that’s normal for shared folders depending on settings. File Requests avoid that for uploads.
         </p>
       </section>
     </section>
@@ -403,6 +382,10 @@
       <span class="bottomIcon" aria-hidden="true">⤴</span>
       <span class="bottomLabel">Upload</span>
     </a>
+    <a id="bbView" class="bottomItem" href="#" target="_blank" rel="noopener">
+      <span class="bottomIcon" aria-hidden="true">▶</span>
+      <span class="bottomLabel">View</span>
+    </a>
     <button id="bbShare" class="bottomItem" type="button">
       <span class="bottomIcon" aria-hidden="true">⇪</span>
       <span class="bottomLabel">Share</span>
@@ -411,9 +394,9 @@
       <span class="bottomIcon" aria-hidden="true">⧉</span>
       <span class="bottomLabel">Copy</span>
     </button>
-    <button id="bbMore" class="bottomItem" type="button">
-      <span class="bottomIcon" aria-hidden="true">⋯</span>
-      <span class="bottomLabel">More</span>
+    <button id="bbCopyUp" class="bottomItem" type="button">
+      <span class="bottomIcon" aria-hidden="true">⧉</span>
+      <span class="bottomLabel">Copy Up</span>
     </button>
   </nav>
 
@@ -467,7 +450,7 @@
     }
 
     function readConfig(){
-      const raw = $("#droppic-config")?.textContent || "{}";
+      const raw = $("#picdrop-config")?.textContent || "{}";
       try { return JSON.parse(raw); }
       catch { return {}; }
     }
@@ -486,29 +469,17 @@
       return !!u;
     }
 
-    function setPreviewMode(mode){
-      // mode: auto | mobile | desktop
-      document.body.dataset.preview = mode;
-      $("#previewState").textContent = mode;
-      toast(`Preview: ${mode}`);
-    }
-
     function init(){
       const cfg = readConfig();
 
-      // Header text
-      $("#title").textContent = cfg.title || "Droppic";
-      $("#subtitle").textContent = cfg.subtitle || "Upload your photos here.";
-      $("#productPill").textContent = cfg.productId || "product1";
+      // Header
+      $("#hdrTitle").textContent = cfg.brand || "PicDrop";
+      $("#hdrSubtitle").textContent = cfg.subtitle || "Tap Upload to share your photos/videos.";
+      $("#productPill").textContent = cfg.productId || "Product1";
 
-      // Hero headline
+      // Hero copy
       $("#headline").textContent = "Welcome 👋";
-      $("#desc").textContent = "Tap Upload to send your photos/videos. This MVP is optimized for phone uploads.";
-
-      // Links
-      const uploadOk1 = setHref($("#uploadBtn"), cfg.uploadUrl || "");
-      const uploadOk2 = setHref($("#bbUpload"), cfg.uploadUrl || "");
-      $("#uploadStatus").textContent = (uploadOk1 && uploadOk2) ? "yes" : "no";
+      $("#desc").textContent = "Tap Upload to add your photos/videos. Tap View to see the folder.";
 
       // Notes
       const notes = $("#notes");
@@ -519,14 +490,27 @@
         notes.appendChild(li);
       });
 
-      // Status block
-      $("#pageUrl").textContent = pageUrl();
+      // Links
+      const upOk = setHref($("#uploadBtn"), cfg.uploadUrl || "");
+      const vwOk = setHref($("#viewBtn"), cfg.viewUrl || "");
+      setHref($("#bbUpload"), cfg.uploadUrl || "");
+      setHref($("#bbView"), cfg.viewUrl || "");
 
-      // Share/copy actions
+      $("#uploadOk").textContent = upOk ? "set" : "missing";
+      $("#viewOk").textContent = vwOk ? "set" : "missing";
+
+      const state = (upOk && vwOk) ? "Links: OK" : "Links: check";
+      $("#linkState").textContent = state;
+
+      // Page URL
+      const pUrl = pageUrl();
+      $("#pageUrl").textContent = pUrl;
+
+      // Share/copy
       const sharePayload = {
-        title: cfg.title || "Droppic",
-        text: "Upload photos here:",
-        url: pageUrl()
+        title: cfg.title || "PicDrop",
+        text: "PicDrop link:",
+        url: pUrl
       };
 
       $("#shareBtn").onclick = async () => {
@@ -541,23 +525,12 @@
       $("#copyBtn").onclick = () => copyText(sharePayload.url);
       $("#bbCopy").onclick = $("#copyBtn").onclick;
 
+      const uploadUrl = safeUrl(cfg.uploadUrl || "");
       $("#copyUploadBtn").onclick = async () => {
-        const u = safeUrl(cfg.uploadUrl || "");
-        if(!u){ toast("Upload link not set"); return; }
-        await copyText(u);
+        if(!uploadUrl){ toast("Upload link not set"); return; }
+        await copyText(uploadUrl);
       };
-
-      $("#bbMore").onclick = () => {
-        toast("MVP: add more actions later");
-      };
-
-      // Preview toggle for you
-      $("#mobileBtn").onclick = () => setPreviewMode("mobile");
-      $("#desktopBtn").onclick = () => setPreviewMode("desktop");
-      $("#autoBtn").onclick = () => setPreviewMode("auto");
-
-      // Default: auto
-      setPreviewMode("auto");
+      $("#bbCopyUp").onclick = $("#copyUploadBtn").onclick;
     }
 
     init();

@@ -9,32 +9,21 @@
     :root{
       --auburn-blue:#0C2340;
       --auburn-orange:#E87722;
-
       --bg:#0b1220;
       --bg2:#0a1020;
-
       --card: rgba(255,255,255,.06);
       --card2: rgba(255,255,255,.03);
-
       --text:#e9eefc;
       --muted:#b9c3dd;
-
       --border: rgba(255,255,255,.12);
-      --border2: rgba(255,255,255,.18);
-
       --shadow: 0 18px 46px rgba(0,0,0,.35);
       --shadow2: 0 10px 28px rgba(0,0,0,.32);
-
       --radius-xl:22px;
-      --radius-lg:18px;
       --radius-md:14px;
-
       --tap: 52px;
       --safe-bottom: env(safe-area-inset-bottom, 0px);
       --safe-top: env(safe-area-inset-top, 0px);
-
       --maxw: 1120px;
-
       --easeOut: cubic-bezier(.2,.8,.2,1);
       --easeSpring: cubic-bezier(.2,1.2,.2,1);
     }
@@ -53,7 +42,6 @@
       overflow-x:hidden;
     }
 
-    /* Desktop-only extra graphics */
     @media (min-width: 920px){
       body::before{
         content:"";
@@ -65,7 +53,6 @@
         border-radius:50%;
         background: radial-gradient(circle at center, rgba(232,119,34,.22), transparent 70%);
         z-index:-2;
-        filter: blur(0px);
         animation: floatA 10s var(--easeOut) infinite alternate;
       }
       body::after{
@@ -81,15 +68,8 @@
         animation: floatB 12s var(--easeOut) infinite alternate;
       }
     }
-
-    @keyframes floatA{
-      from{ transform: translate3d(0,0,0) scale(1); }
-      to{ transform: translate3d(-18px,22px,0) scale(1.03); }
-    }
-    @keyframes floatB{
-      from{ transform: translate3d(0,0,0) scale(1); }
-      to{ transform: translate3d(22px,-18px,0) scale(1.02); }
-    }
+    @keyframes floatA{ from{transform:translate3d(0,0,0) scale(1)} to{transform:translate3d(-18px,22px,0) scale(1.03)} }
+    @keyframes floatB{ from{transform:translate3d(0,0,0) scale(1)} to{transform:translate3d(22px,-18px,0) scale(1.02)} }
 
     .container{
       max-width: var(--maxw);
@@ -97,7 +77,6 @@
       padding: calc(14px + var(--safe-top)) 14px calc(126px + var(--safe-bottom));
     }
 
-    /* Topbar */
     .topbar{
       position: sticky;
       top: 0;
@@ -112,83 +91,38 @@
       border-bottom: 1px solid rgba(255,255,255,.06);
     }
 
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width: 0;
-    }
+    .brand{ display:flex; align-items:center; gap:12px; min-width:0; }
 
     .logo{
-      width:46px;
-      height:46px;
-      border-radius: 16px;
+      width:46px; height:46px; border-radius: 16px;
       border: 2px solid rgba(232,119,34,.55);
       background: linear-gradient(135deg, rgba(232,119,34,.18), rgba(12,35,64,.55));
       box-shadow: var(--shadow2);
-      display:grid;
-      place-items:center;
+      display:grid; place-items:center;
       overflow:hidden;
-      transform: translateY(0);
       animation: popIn .7s var(--easeSpring) both;
     }
-
-    /* This is your transparent PNG logo file */
     .logo img{
-      width: 92%;
-      height: 92%;
+      width: 92%; height: 92%;
       object-fit: contain;
       filter: drop-shadow(0 8px 16px rgba(0,0,0,.25));
       animation: logoPulse 2.6s var(--easeOut) infinite;
     }
-
-    @keyframes logoPulse{
-      0%,100%{ transform: translateY(0) scale(1); }
-      50%{ transform: translateY(-1px) scale(1.02); }
-    }
-
-    @keyframes popIn{
-      from{ transform: translateY(10px) scale(.95); opacity:0; }
-      to{ transform: translateY(0) scale(1); opacity:1; }
-    }
+    @keyframes popIn{ from{transform:translateY(10px) scale(.95);opacity:0} to{transform:translateY(0) scale(1);opacity:1} }
+    @keyframes logoPulse{ 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-1px) scale(1.02)} }
 
     .titleBlock{ min-width:0; }
-    .title{
-      font-weight: 950;
-      font-size: 15px;
-      line-height: 1.1;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .subtitle{
-      margin-top: 4px;
-      font-size: 13px;
-      color: var(--muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+    .title{ font-weight:950; font-size:15px; line-height:1.1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .subtitle{ margin-top:4px; font-size:13px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 
-    .meta{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex: 0 0 auto;
-    }
+    .meta{ display:flex; align-items:center; gap:10px; flex:0 0 auto; }
 
     .pill{
-      display:inline-flex;
-      align-items:center;
-      height: 30px;
-      padding: 0 10px;
-      border-radius: 999px;
-      border:1px solid var(--border);
+      display:inline-flex; align-items:center; height:30px; padding:0 10px;
+      border-radius:999px; border:1px solid var(--border);
       background: rgba(255,255,255,.06);
       color: var(--muted);
-      font-size: 12px;
-      font-weight: 900;
-      letter-spacing: .2px;
+      font-size:12px; font-weight:900; letter-spacing:.2px;
     }
     .pill--accent{
       background: rgba(232,119,34,.16);
@@ -196,7 +130,6 @@
       color: var(--text);
     }
 
-    /* Cards */
     .card{
       background: linear-gradient(180deg, var(--card), var(--card2));
       border: 1px solid var(--border);
@@ -205,50 +138,12 @@
       padding: 16px;
       animation: fadeUp .8s var(--easeOut) both;
     }
+    @keyframes fadeUp{ from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)} }
 
-    @keyframes fadeUp{
-      from{ opacity:0; transform: translateY(10px); }
-      to{ opacity:1; transform: translateY(0); }
-    }
+    .hero h1{ margin:6px 0 8px; font-size:30px; letter-spacing:-.25px; }
+    .hero p{ margin:0 0 14px; color:var(--muted); line-height:1.5; }
 
-    .hero{
-      position: relative;
-      overflow:hidden;
-    }
-
-    /* Desktop-only extra hero detail */
-    @media (min-width: 920px){
-      .hero::after{
-        content:"";
-        position:absolute;
-        right:-60px;
-        top:-60px;
-        width:190px;
-        height:190px;
-        border-radius: 28px;
-        border:2px solid rgba(255,255,255,.10);
-        transform: rotate(12deg);
-        opacity:.35;
-      }
-    }
-
-    .hero h1{
-      margin: 6px 0 8px;
-      font-size: 30px;
-      letter-spacing: -0.25px;
-    }
-    .hero p{
-      margin: 0 0 14px;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    .actions{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-top: 10px;
-    }
+    .actions{ display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; }
 
     .btn{
       min-height: var(--tap);
@@ -265,13 +160,13 @@
       cursor:pointer;
       -webkit-tap-highlight-color: transparent;
       user-select:none;
-      transition: transform .18s var(--easeOut), filter .18s var(--easeOut), background .18s var(--easeOut);
+      transition: transform .18s var(--easeOut), filter .18s var(--easeOut);
     }
     .btn:hover{ filter: brightness(1.05); }
     .btn:active{ transform: translateY(1px) scale(.99); }
 
     .btnPrimary{
-      border: none;
+      border:none;
       color:#0a1020;
       background: linear-gradient(135deg, var(--auburn-orange), rgba(232,119,34,.74));
       box-shadow: 0 16px 26px rgba(232,119,34,.14);
@@ -280,33 +175,20 @@
       border: 1px solid rgba(232,119,34,.35);
       background: linear-gradient(135deg, rgba(12,35,64,.88), rgba(12,35,64,.55));
     }
-    .btnGhost{
-      background: rgba(255,255,255,.06);
-    }
+    .btnGhost{ background: rgba(255,255,255,.06); }
 
-    hr.sep{
-      border:none;
-      border-top:1px solid rgba(255,255,255,.10);
-      margin:14px 0;
-    }
+    hr.sep{ border:none; border-top:1px solid rgba(255,255,255,.10); margin:14px 0; }
 
-    /* Layout sections */
     .grid{
       margin-top: 14px;
       display:grid;
       grid-template-columns: 1.1fr .9fr;
       gap: 14px;
     }
-    @media (max-width: 920px){
-      .grid{ grid-template-columns: 1fr; }
-    }
+    @media (max-width: 920px){ .grid{ grid-template-columns: 1fr; } }
 
-    .notes{
-      margin: 10px 0 0 18px;
-      color: var(--muted);
-      padding: 0;
-    }
-    .notes li{ margin-bottom: 8px; }
+    .notes{ margin:10px 0 0 18px; color:var(--muted); padding:0; }
+    .notes li{ margin-bottom:8px; }
 
     .statusLine{
       color: var(--muted);
@@ -332,84 +214,29 @@
       border: 1px solid rgba(255,255,255,.12);
       overflow:hidden;
       background: rgba(0,0,0,.18);
-      min-height: 220px;
+      min-height: 240px;
     }
-
-    .track{
-      display:flex;
-      transition: transform .55s var(--easeOut);
-      will-change: transform;
-    }
-
-    .slide{
-      min-width: 100%;
-      aspect-ratio: 16/9;
-      background: rgba(255,255,255,.04);
-      display:grid;
-      place-items:center;
-      position: relative;
-    }
-
-    .slide img{
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transform: scale(1.02);
-      filter: saturate(1.05);
-    }
-
-    .slide::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background: linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.22));
-      pointer-events:none;
-    }
+    .track{ display:flex; transition: transform .55s var(--easeOut); will-change: transform; }
+    .slide{ min-width:100%; aspect-ratio:16/9; background:rgba(255,255,255,.04); display:grid; place-items:center; position:relative; }
+    .slide img{ width:100%; height:100%; object-fit:cover; transform:scale(1.01); filter:saturate(1.05); }
+    .slide::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.22)); pointer-events:none; }
 
     .carouselBar{
-      position:absolute;
-      left: 10px;
-      right: 10px;
-      bottom: 10px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      z-index: 2;
+      position:absolute; left:10px; right:10px; bottom:10px;
+      display:flex; align-items:center; justify-content:space-between; gap:10px; z-index:2;
     }
+    .dots{ display:flex; gap:6px; align-items:center; }
+    .dot{ width:8px; height:8px; border-radius:999px; background:rgba(255,255,255,.25); border:1px solid rgba(255,255,255,.20); transition: width .2s var(--easeOut), background .2s var(--easeOut); }
+    .dot.active{ width:18px; background: rgba(232,119,34,.85); border-color: rgba(232,119,34,.55); }
 
-    .dots{
-      display:flex;
-      gap:6px;
-      align-items:center;
-    }
-    .dot{
-      width: 8px;
-      height: 8px;
-      border-radius: 99px;
-      background: rgba(255,255,255,.25);
-      border: 1px solid rgba(255,255,255,.20);
-      transition: width .2s var(--easeOut), background .2s var(--easeOut);
-    }
-    .dot.active{
-      width: 18px;
-      background: rgba(232,119,34,.85);
-      border-color: rgba(232,119,34,.55);
-    }
-
-    .carBtns{
-      display:flex;
-      gap:8px;
-    }
+    .carBtns{ display:flex; gap:8px; }
     .iconBtn{
-      width:44px;height:44px;
-      border-radius: 16px;
+      width:44px; height:44px; border-radius:16px;
       border:1px solid rgba(255,255,255,.14);
       background: rgba(0,0,0,.28);
       color: var(--text);
       cursor:pointer;
-      display:grid;
-      place-items:center;
+      display:grid; place-items:center;
       -webkit-tap-highlight-color: transparent;
       user-select:none;
       transition: transform .18s var(--easeOut), filter .18s var(--easeOut);
@@ -417,29 +244,17 @@
     .iconBtn:hover{ filter: brightness(1.05); }
     .iconBtn:active{ transform: translateY(1px) scale(.99); }
 
-    .emptyGallery{
-      padding: 14px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.5;
-    }
+    .emptyGallery{ padding:14px; color:var(--muted); font-size:13px; line-height:1.5; }
 
-    /* Bottom action bar */
     .bottomBar{
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 40;
-      display:grid;
-      grid-template-columns: repeat(5, 1fr);
+      position: fixed; left:0; right:0; bottom:0; z-index:40;
+      display:grid; grid-template-columns: repeat(5, 1fr);
       gap: 8px;
       padding: 10px 10px calc(10px + var(--safe-bottom));
       background: rgba(11,18,32,.88);
       border-top: 1px solid var(--border);
       backdrop-filter: blur(14px);
     }
-
     .bottomItem{
       min-height: 58px;
       border-radius: 16px;
@@ -447,10 +262,7 @@
       background: rgba(255,255,255,.06);
       color: var(--text);
       text-decoration:none;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
       gap: 4px;
       cursor:pointer;
       -webkit-tap-highlight-color: transparent;
@@ -459,24 +271,16 @@
     }
     .bottomItem:hover{ filter: brightness(1.05); }
     .bottomItem:active{ transform: translateY(1px) scale(.99); }
+    .bottomItemPrimary{ background: linear-gradient(135deg, var(--auburn-orange), rgba(232,119,34,.72)); border:none; color:#0a1020; }
+    .bottomIcon{ font-size:18px; line-height:1; }
+    .bottomLabel{ font-size:11px; font-weight:950; }
 
-    .bottomItemPrimary{
-      background: linear-gradient(135deg, var(--auburn-orange), rgba(232,119,34,.72));
-      border: none;
-      color: #0a1020;
-    }
-    .bottomIcon{ font-size: 18px; line-height: 1; }
-    .bottomLabel{ font-size: 11px; font-weight: 950; }
-
-    /* Toast */
     .toast{
-      position: fixed;
-      left: 50%;
-      transform: translateX(-50%);
+      position: fixed; left: 50%; transform: translateX(-50%);
       bottom: calc(106px + var(--safe-bottom));
       z-index: 60;
       background: rgba(0,0,0,.75);
-      color: #fff;
+      color:#fff;
       padding: 10px 12px;
       border-radius: 999px;
       border: 1px solid rgba(255,255,255,.18);
@@ -485,47 +289,30 @@
       text-align:center;
     }
 
-    :focus-visible{
-      outline: 3px solid rgba(232,119,34,.55);
-      outline-offset: 2px;
-    }
-
-    @media (prefers-reduced-motion: reduce){
-      *{ animation: none !important; transition: none !important; }
-    }
+    :focus-visible{ outline: 3px solid rgba(232,119,34,.55); outline-offset: 2px; }
+    @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } }
   </style>
 </head>
 
 <body>
-  <!-- =========================
-       EMBEDDED CONFIG
-       ========================= -->
   <script id="picdrop-config" type="application/json">
   {
     "productId": "Product1",
     "brand": "PicDrop",
-    "title": "PicDrop • Product 1",
     "subtitle": "Tap • Upload • Share",
     "logoPngPath": "../assets/picdrop-logo.png",
-
     "uploadUrl": "https://www.dropbox.com/scl/fo/wgiod5sln38d0ym268nuh/ADoSJVQHy0EPQ1e_OM4V4Ks?rlkey=tfhfj89n5htlstruhwt8vhtb2&st=wu6qikxy&dl=0",
     "viewUrl":   "https://www.dropbox.com/scl/fo/wgiod5sln38d0ym268nuh/ADoSJVQHy0EPQ1e_OM4V4Ks?rlkey=z26itm54dzsn3cin9ufgc2amd&st=wu6qikxy&dl=0",
-
     "notes": [
       "Tap Upload to add photos/videos from your phone.",
       "Wi-Fi is best for videos.",
       "Tap View to see what’s already been uploaded."
     ],
-
     "carousel": {
-      "maxSlides": 8,
+      "maxSlides": 10,
       "autoplayMs": 3500,
       "randomizeEachLoad": true,
-      "galleryImageUrls": [
-        "PASTE_DIRECT_IMAGE_URL_1",
-        "PASTE_DIRECT_IMAGE_URL_2",
-        "PASTE_DIRECT_IMAGE_URL_3"
-      ]
+      "manifestUrl": "./gallery.json"
     }
   }
   </script>
@@ -533,15 +320,12 @@
   <main class="container">
     <header class="topbar">
       <div class="brand">
-        <div class="logo" aria-hidden="true">
-          <img id="logoImg" alt="" />
-        </div>
+        <div class="logo" aria-hidden="true"><img id="logoImg" alt="" /></div>
         <div class="titleBlock">
           <div id="hdrTitle" class="title">PicDrop</div>
           <div id="hdrSubtitle" class="subtitle">Tap • Upload • Share</div>
         </div>
       </div>
-
       <div class="meta">
         <div id="productPill" class="pill pill--accent">Product1</div>
         <div id="linkState" class="pill">Links: —</div>
@@ -549,8 +333,8 @@
     </header>
 
     <section class="card hero">
-      <h1 id="headline">Welcome 👋</h1>
-      <p id="desc">Tap Upload to add your photos/videos. Tap View to see the folder.</p>
+      <h1>PicDrop</h1>
+      <p>Tap Upload to add your photos/videos. Tap View to see what’s already been uploaded.</p>
 
       <div class="actions">
         <a id="uploadBtn" class="btn btnPrimary" href="#" target="_blank" rel="noopener">Upload</a>
@@ -561,18 +345,16 @@
       </div>
 
       <hr class="sep"/>
-
-      <div class="pill">Highlights</div>
+      <div class="pill">Quick tips</div>
       <ul id="notes" class="notes"></ul>
     </section>
 
     <section class="grid">
       <section class="card">
-        <div class="pill">Recent uploads</div>
+        <div class="pill">Random photos</div>
         <p class="statusLine" style="margin:10px 0 10px;">
-          A random selection of photos appears here (curated links). This keeps the site fast and reliable.
+          This automatically pulls from the Product1 Dropbox folder via an auto-updated manifest.
         </p>
-
         <div id="carousel" class="carousel" aria-label="Photo carousel"></div>
       </section>
 
@@ -581,11 +363,7 @@
         <p class="statusLine" style="margin:10px 0 0;">
           • Upload link: <span id="uploadOk">—</span><br/>
           • View link: <span id="viewOk">—</span><br/>
-          • This page: <code class="k" id="pageUrl">—</code>
-        </p>
-        <hr class="sep"/>
-        <p class="statusLine" style="margin:0;">
-          If you want the carousel to auto-pull from Dropbox without manual links, we can add a lightweight Dropbox API flow later.
+          • Manifest: <span id="manifestOk">—</span>
         </p>
       </section>
     </section>
@@ -593,24 +371,19 @@
 
   <nav class="bottomBar" aria-label="Primary actions">
     <a id="bbUpload" class="bottomItem bottomItemPrimary" href="#" target="_blank" rel="noopener">
-      <span class="bottomIcon" aria-hidden="true">⤴</span>
-      <span class="bottomLabel">Upload</span>
+      <span class="bottomIcon" aria-hidden="true">⤴</span><span class="bottomLabel">Upload</span>
     </a>
     <a id="bbView" class="bottomItem" href="#" target="_blank" rel="noopener">
-      <span class="bottomIcon" aria-hidden="true">▶</span>
-      <span class="bottomLabel">View</span>
+      <span class="bottomIcon" aria-hidden="true">▶</span><span class="bottomLabel">View</span>
     </a>
     <button id="bbPrev" class="bottomItem" type="button">
-      <span class="bottomIcon" aria-hidden="true">‹</span>
-      <span class="bottomLabel">Prev</span>
+      <span class="bottomIcon" aria-hidden="true">‹</span><span class="bottomLabel">Prev</span>
     </button>
     <button id="bbNext" class="bottomItem" type="button">
-      <span class="bottomIcon" aria-hidden="true">›</span>
-      <span class="bottomLabel">Next</span>
+      <span class="bottomIcon" aria-hidden="true">›</span><span class="bottomLabel">Next</span>
     </button>
     <button id="bbCopy" class="bottomItem" type="button">
-      <span class="bottomIcon" aria-hidden="true">⧉</span>
-      <span class="bottomLabel">Copy</span>
+      <span class="bottomIcon" aria-hidden="true">⧉</span><span class="bottomLabel">Copy</span>
     </button>
   </nav>
 
@@ -619,7 +392,6 @@
   <script>
     const $ = (sel) => document.querySelector(sel);
 
-    // Toast
     let toastTimer = null;
     function toast(msg, ms=1400){
       const el = $("#toast");
@@ -632,38 +404,24 @@
     function haptic(){ if(navigator.vibrate) navigator.vibrate(10); }
 
     function safeUrl(url){
-      try { return new URL(url).toString(); }
-      catch { return ""; }
+      try { return new URL(url).toString(); } catch { return ""; }
     }
     function pageUrl(){ return window.location.href.split("?")[0]; }
 
     async function copyText(text){
-      try{
-        await navigator.clipboard.writeText(text);
-        haptic();
-        toast("Copied!");
-        return true;
-      }catch{
-        toast("Copy failed — use address bar");
-        return false;
-      }
+      try{ await navigator.clipboard.writeText(text); haptic(); toast("Copied!"); return true; }
+      catch{ toast("Copy failed — use address bar"); return false; }
     }
 
     async function shareLink(payload){
-      try{
-        if(navigator.share){
-          await navigator.share(payload);
-          haptic();
-          return true;
-        }
-      }catch{}
+      try{ if(navigator.share){ await navigator.share(payload); haptic(); return true; } }
+      catch{}
       return false;
     }
 
     function readConfig(){
       const raw = $("#picdrop-config")?.textContent || "{}";
-      try { return JSON.parse(raw); }
-      catch { return {}; }
+      try { return JSON.parse(raw); } catch { return {}; }
     }
 
     function setHref(el, href){
@@ -680,7 +438,6 @@
       return !!u;
     }
 
-    // ---- Carousel helpers ----
     function shuffle(arr){
       const a = arr.slice();
       for(let i=a.length-1;i>0;i--){
@@ -690,49 +447,39 @@
       return a;
     }
 
-    function buildCarousel(container, imageUrls, opts){
+    function buildCarousel(container, urls, opts){
       container.innerHTML = "";
-
-      if(!imageUrls || imageUrls.length === 0 || imageUrls.some(u => (u||"").startsWith("PASTE_DIRECT_IMAGE_URL"))){
-        container.innerHTML = `
-          <div class="emptyGallery">
-            <strong>No carousel images set yet.</strong><br><br>
-            Add direct image URLs in <code class="k">carousel.galleryImageUrls</code> in the embedded JSON.
-            <br><br>
-            Tip: you can also store a few curated images in your repo at <code class="k">assets/gallery/</code> and reference them like:
-            <br><code class="k">../assets/gallery/1.jpg</code>
-          </div>
-        `;
-        return { next(){}, prev(){}, goTo(){}, index:0, count:0, stop(){}, start(){} };
+      if(!urls || urls.length === 0){
+        container.innerHTML = `<div class="emptyGallery"><strong>No images yet.</strong><br><br>Upload some photos, then refresh.</div>`;
+        return { next(){}, prev(){}, stop(){}, start(){} };
       }
 
-      const maxSlides = Math.max(1, opts.maxSlides || 8);
-      const slides = (opts.randomizeEachLoad ? shuffle(imageUrls) : imageUrls).slice(0, maxSlides);
+      const maxSlides = Math.max(1, opts.maxSlides || 10);
+      const srcs = (opts.randomizeEachLoad ? shuffle(urls) : urls).slice(0, maxSlides);
 
       const track = document.createElement("div");
       track.className = "track";
 
-      slides.forEach((src, idx) => {
+      srcs.forEach((src, idx) => {
         const slide = document.createElement("div");
         slide.className = "slide";
         const img = document.createElement("img");
         img.loading = idx === 0 ? "eager" : "lazy";
         img.alt = `PicDrop photo ${idx+1}`;
         img.src = src;
+        img.onerror = () => { slide.innerHTML = `<div class="emptyGallery">Failed to load image.</div>`; };
         slide.appendChild(img);
         track.appendChild(slide);
       });
 
       container.appendChild(track);
 
-      // Controls
       const bar = document.createElement("div");
       bar.className = "carouselBar";
 
       const dots = document.createElement("div");
       dots.className = "dots";
-
-      const dotEls = slides.map((_, i) => {
+      const dotEls = srcs.map((_, i) => {
         const d = document.createElement("div");
         d.className = "dot" + (i===0 ? " active" : "");
         dots.appendChild(d);
@@ -745,96 +492,76 @@
       prevBtn.className = "iconBtn";
       prevBtn.type = "button";
       prevBtn.textContent = "‹";
-      prevBtn.setAttribute("aria-label", "Previous photo");
-
       const nextBtn = document.createElement("button");
       nextBtn.className = "iconBtn";
       nextBtn.type = "button";
       nextBtn.textContent = "›";
-      nextBtn.setAttribute("aria-label", "Next photo");
+      btns.appendChild(prevBtn); btns.appendChild(nextBtn);
 
-      btns.appendChild(prevBtn);
-      btns.appendChild(nextBtn);
-
-      bar.appendChild(dots);
-      bar.appendChild(btns);
+      bar.appendChild(dots); bar.appendChild(btns);
       container.appendChild(bar);
 
       let idx = 0;
-      const count = slides.length;
+      const count = srcs.length;
 
       function render(){
         track.style.transform = `translate3d(${-idx*100}%,0,0)`;
         dotEls.forEach((d,i)=> d.classList.toggle("active", i===idx));
       }
-
-      function goTo(i){
-        idx = (i + count) % count;
-        render();
-      }
+      function goTo(i){ idx = (i + count) % count; render(); }
       function next(){ goTo(idx+1); }
       function prev(){ goTo(idx-1); }
 
       prevBtn.onclick = () => { haptic(); prev(); };
       nextBtn.onclick = () => { haptic(); next(); };
 
-      // Swipe support
+      // swipe
       let startX = null;
-      track.addEventListener("touchstart", (e) => {
-        startX = e.touches[0].clientX;
-      }, {passive:true});
-
-      track.addEventListener("touchend", (e) => {
-        if(startX == null) return;
-        const endX = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientX : startX;
+      track.addEventListener("touchstart", (e)=>{ startX = e.touches[0].clientX; }, {passive:true});
+      track.addEventListener("touchend", (e)=>{
+        if(startX==null) return;
+        const endX = e.changedTouches?.[0]?.clientX ?? startX;
         const dx = endX - startX;
         startX = null;
-        if(Math.abs(dx) > 40){
-          haptic();
-          (dx < 0) ? next() : prev();
-        }
+        if(Math.abs(dx) > 40){ haptic(); (dx < 0) ? next() : prev(); }
       }, {passive:true});
 
-      // Autoplay
+      // autoplay
       let timer = null;
-      function stop(){
-        if(timer) clearInterval(timer);
-        timer = null;
-      }
+      function stop(){ if(timer) clearInterval(timer); timer = null; }
       function start(){
         stop();
+        if(count <= 1) return;
         const ms = Math.max(1200, opts.autoplayMs || 3500);
         timer = setInterval(next, ms);
       }
 
-      // Pause autoplay while interacting
       container.addEventListener("mouseenter", stop);
       container.addEventListener("mouseleave", start);
       container.addEventListener("touchstart", stop, {passive:true});
       container.addEventListener("touchend", start, {passive:true});
 
-      render();
-      start();
-
-      return { next, prev, goTo, get index(){ return idx; }, count, stop, start };
+      render(); start();
+      return { next, prev, stop, start };
     }
 
-    function init(){
+    async function loadManifest(manifestUrl){
+      const res = await fetch(manifestUrl, { cache: "no-store" });
+      if(!res.ok) throw new Error(`Manifest HTTP ${res.status}`);
+      const data = await res.json();
+      // expected: { "images": ["https://...raw=1", ...] }
+      const imgs = Array.isArray(data.images) ? data.images : [];
+      return imgs.filter(u => typeof u === "string" && u.startsWith("http"));
+    }
+
+    async function init(){
       const cfg = readConfig();
 
-      // Logo path (repo asset). Put your transparent PNG at: assets/picdrop-logo.png
       $("#logoImg").src = cfg.logoPngPath || "../assets/picdrop-logo.png";
-
-      // Header text
       $("#hdrTitle").textContent = cfg.brand || "PicDrop";
       $("#hdrSubtitle").textContent = cfg.subtitle || "Tap • Upload • Share";
       $("#productPill").textContent = cfg.productId || "Product1";
 
-      // Hero copy
-      $("#headline").textContent = "PicDrop";
-      $("#desc").textContent = "Tap Upload to add your photos/videos. Tap View to see what’s already been uploaded.";
-
-      // Notes
       const notes = $("#notes");
       notes.innerHTML = "";
       (cfg.notes || []).forEach(t => {
@@ -843,7 +570,6 @@
         notes.appendChild(li);
       });
 
-      // Links
       const upOk = setHref($("#uploadBtn"), cfg.uploadUrl || "");
       const vwOk = setHref($("#viewBtn"), cfg.viewUrl || "");
       setHref($("#bbUpload"), cfg.uploadUrl || "");
@@ -853,45 +579,36 @@
       $("#viewOk").textContent = vwOk ? "set" : "missing";
       $("#linkState").textContent = (upOk && vwOk) ? "Links: OK" : "Links: check";
 
-      // Page URL
       const pUrl = pageUrl();
-      $("#pageUrl").textContent = pUrl;
-
-      // Share/copy
-      const sharePayload = {
-        title: cfg.title || "PicDrop",
-        text: "PicDrop link:",
-        url: pUrl
-      };
+      const sharePayload = { title: "PicDrop", text: "PicDrop link:", url: pUrl };
 
       $("#bbCopy").onclick = () => copyText(sharePayload.url);
-      $("#copyBtn")?.addEventListener("click", () => copyText(sharePayload.url));
-      $("#copyUploadBtn")?.addEventListener("click", () => {
+      $("#copyBtn").onclick = () => copyText(sharePayload.url);
+      $("#copyUploadBtn").onclick = () => {
         const u = safeUrl(cfg.uploadUrl || "");
         if(!u){ toast("Upload link not set"); return; }
         copyText(u);
-      });
-
-      $("#shareBtn")?.addEventListener("click", async () => {
+      };
+      $("#shareBtn").onclick = async () => {
         const ok = await shareLink(sharePayload);
-        if(!ok){
-          await copyText(sharePayload.url);
-          toast("Share not supported — link copied");
-        }
-      });
+        if(!ok){ await copyText(sharePayload.url); toast("Share not supported — link copied"); }
+      };
 
-      // Carousel
-      const carouselCfg = (cfg.carousel || {});
-      const carouselEl = $("#carousel");
-      const controller = buildCarousel(
-        carouselEl,
-        carouselCfg.galleryImageUrls || [],
-        carouselCfg
-      );
-
-      // Bottom bar prev/next wire to carousel
-      $("#bbPrev").onclick = () => { haptic(); controller.prev(); };
-      $("#bbNext").onclick = () => { haptic(); controller.next(); };
+      // --- manifest-driven carousel ---
+      const car = cfg.carousel || {};
+      try{
+        const imgs = await loadManifest(car.manifestUrl || "./gallery.json");
+        $("#manifestOk").textContent = `ok (${imgs.length})`;
+        const controller = buildCarousel($("#carousel"), imgs, car);
+        $("#bbPrev").onclick = () => { haptic(); controller.prev(); };
+        $("#bbNext").onclick = () => { haptic(); controller.next(); };
+      }catch(err){
+        $("#manifestOk").textContent = "missing/blocked";
+        $("#carousel").innerHTML = `<div class="emptyGallery"><strong>Gallery not ready yet.</strong><br><br>
+          The manifest file <code class="k">${(car.manifestUrl||"./gallery.json")}</code> could not be loaded.<br>
+          Once the GitHub Action runs, refresh this page.
+        </div>`;
+      }
     }
 
     init();

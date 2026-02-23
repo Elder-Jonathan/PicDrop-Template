@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>PicDrop • Get Dropbox Refresh Token</title>
+  <style>
+    body{font-family:system-ui,Arial,sans-serif;margin:24px;line-height:1.4}
+    input,button{font-size:16px;padding:10px}
+    code{background:#f3f3f3;padding:2px 6px;border-radius:6px}
+    .box{border:1px solid #ddd;border-radius:12px;padding:16px;max-width:900px}
+  </style>
+</head>
+<body>
+  <h1>Get Dropbox Refresh Token</h1>
+  <div class="box">
+    <p>1) Paste your Dropbox <code>APP_KEY</code> and <code>APP_SECRET</code>.</p>
+    <p>2) Click Authorize → approve → you’ll come back here.</p>
+    <p>3) Click Exchange Code to get <code>refresh_token</code>.</p>
+
+    <p>
+      <label>APP_KEY<br><input id="key" style="width:100%"/></label>
+    </p>
+    <p>
+      <label>APP_SECRET<br><input id="secret" style="width:100%"/></label>
+    </p>
+
+    <button id="auth">Authorize</button>
+    <button id="exchange">Exchange Code</button>
+
+    <h3>Result</h3>
+    <pre id="out"></pre>
+  </div>
+
+<script>
+const out = document.getElementById("out");
+const params = new URLSearchParams(location.search);
+const code = params.get("code");
+
+document.getElementById("auth").onclick = () => {
+  const key = document.getElementById("key").value.trim();
+  if(!key) return alert("Enter APP_KEY");
+  const redirectUri = location.origin + location.pathname;
+  // token_access_type=offline requests a refresh token (Dropbox supports refresh tokens). :contentReference[oaicite:8]{index=8}
+  const url =
+    "https://www.dropbox.com/oauth2/authorize" +
+    "?client_id=" + encodeURIComponent(key) +
+    "&response_type=code" +
+    "&token_access_type=offline" +
+    "&redirect_uri=" + encodeURIComponent(redirectUri);
+  location.href = url;
+};
+
+document.getElementById("exchange").onclick = async () => {
+  const key = document.getElementById("key").value.trim();
+  const secret = document.getElementById("secret").value.trim();
+  if(!key || !secret) return alert("Enter APP_KEY and APP_SECRET");
+  if(!code) return alert("No code in URL. Click Authorize first.");
+
+  const redirectUri = location.origin + location.pathname;
+  const basic = btoa(key + ":" + secret);
+
+  const res = await fetch("https://api.dropboxapi.com/oauth2/token", {
+    method: "POST",
+    headers: {
+      "Authorization": "Basic " + basic,
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: new URLSearchParams({
+      code,
+      grant_type: "authorization_code",
+      redirect_uri: redirectUri
+    })
+  });
+
+  const text = await res.text();
+  out.textContent = text;
+};
+</script>
+</body>
+</html>

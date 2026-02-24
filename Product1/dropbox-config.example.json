@@ -1,0 +1,6 @@
+{
+  "appKey": "YOUR_DROPBOX_APP_KEY",
+  "appSecret": "YOUR_DROPBOX_APP_SECRET",
+  "refreshToken": "YOUR_DROPBOX_REFRESH_TOKEN",
+  "folderPath": "/Product1"
+}

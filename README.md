@@ -41,6 +41,7 @@ npm install
      "appKey": "YOUR_DROPBOX_APP_KEY",
      "appSecret": "YOUR_DROPBOX_APP_SECRET",
      "refreshToken": "YOUR_DROPBOX_REFRESH_TOKEN",
+     "accessToken": "YOUR_DROPBOX_ACCESS_TOKEN",
      "folderPath": "/Product1"
    }
    ```
@@ -49,6 +50,7 @@ npm install
 - `DROPBOX_APP_KEY`
 - `DROPBOX_APP_SECRET`
 - `DROPBOX_REFRESH_TOKEN`
+- `DROPBOX_ACCESS_TOKEN` (optional; if set, the workflow uses it directly and skips token refresh)
 - `DROPBOX_FOLDER_PATH` (optional; defaults to `/Product1`)
 
 For local testing, copy `Product1/dropbox-config.example.json` to `Product1/dropbox-config.json` and fill values. The script reads that file automatically when env vars/secrets are not set.

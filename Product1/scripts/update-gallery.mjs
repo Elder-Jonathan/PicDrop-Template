@@ -26,6 +26,7 @@ const resolvedConfig = jsonConfigFromSecret || jsonConfigFromFile || {};
 const DROPBOX_APP_KEY = process.env.DROPBOX_APP_KEY || resolvedConfig.appKey;
 const DROPBOX_APP_SECRET = process.env.DROPBOX_APP_SECRET || resolvedConfig.appSecret;
 const DROPBOX_REFRESH_TOKEN = process.env.DROPBOX_REFRESH_TOKEN || resolvedConfig.refreshToken;
+const DROPBOX_ACCESS_TOKEN = process.env.DROPBOX_ACCESS_TOKEN || resolvedConfig.accessToken;
 const DROPBOX_FOLDER_PATH = process.env.DROPBOX_FOLDER_PATH || resolvedConfig.folderPath || "/Product1";
 
 const OUTPUT_PATH = process.env.OUTPUT_PATH || "Product1/gallery.json";
@@ -43,6 +44,10 @@ function toRaw(link){
 }
 
 async function getAccessToken(){
+  if(DROPBOX_ACCESS_TOKEN){
+    return DROPBOX_ACCESS_TOKEN;
+  }
+
   assertEnv("DROPBOX_APP_KEY", DROPBOX_APP_KEY);
   assertEnv("DROPBOX_APP_SECRET", DROPBOX_APP_SECRET);
   assertEnv("DROPBOX_REFRESH_TOKEN", DROPBOX_REFRESH_TOKEN);

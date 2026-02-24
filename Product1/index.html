@@ -300,7 +300,7 @@
     "productId": "Product1",
     "brand": "PicDrop",
     "subtitle": "Tap • Upload • Share",
-    "logoPngPath": "../assets/picdrop-logo.png",
+    "logoPngPath": "../Assets/picdrop-logo.svg",
     "uploadUrl": "https://www.dropbox.com/scl/fo/wgiod5sln38d0ym268nuh/ADoSJVQHy0EPQ1e_OM4V4Ks?rlkey=tfhfj89n5htlstruhwt8vhtb2&st=wu6qikxy&dl=0",
     "viewUrl":   "https://www.dropbox.com/scl/fo/wgiod5sln38d0ym268nuh/ADoSJVQHy0EPQ1e_OM4V4Ks?rlkey=z26itm54dzsn3cin9ufgc2amd&st=wu6qikxy&dl=0",
     "notes": [
@@ -423,6 +423,19 @@
       const raw = $("#picdrop-config")?.textContent || "{}";
       try { return JSON.parse(raw); } catch { return {}; }
     }
+
+    const DEFAULT_LOGO_DATA_URI =
+      "data:image/svg+xml," +
+      encodeURIComponent(
+        `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'>` +
+        `<defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>` +
+        `<stop offset='0%' stop-color='#E87722'/><stop offset='100%' stop-color='#0C2340'/>` +
+        `</linearGradient></defs>` +
+        `<rect width='128' height='128' rx='28' fill='url(#g)'/>` +
+        `<path d='M64 28l26 22v38H38V50l26-22z' fill='rgba(255,255,255,0.92)'/>` +
+        `<circle cx='64' cy='67' r='12' fill='#0C2340'/>` +
+        `</svg>`
+      );
 
     function setHref(el, href){
       const u = safeUrl(href);
@@ -557,7 +570,13 @@
     async function init(){
       const cfg = readConfig();
 
-      $("#logoImg").src = cfg.logoPngPath || "../assets/picdrop-logo.png";
+      const logoEl = $("#logoImg");
+      logoEl.onerror = () => {
+        if(logoEl.src !== DEFAULT_LOGO_DATA_URI){
+          logoEl.src = DEFAULT_LOGO_DATA_URI;
+        }
+      };
+      logoEl.src = cfg.logoPngPath || DEFAULT_LOGO_DATA_URI;
       $("#hdrTitle").textContent = cfg.brand || "PicDrop";
       $("#hdrSubtitle").textContent = cfg.subtitle || "Tap • Upload • Share";
       $("#productPill").textContent = cfg.productId || "Product1";

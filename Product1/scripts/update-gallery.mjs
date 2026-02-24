@@ -1,9 +1,32 @@
 import fs from "node:fs/promises";
 
-const DROPBOX_APP_KEY = process.env.DROPBOX_APP_KEY;
-const DROPBOX_APP_SECRET = process.env.DROPBOX_APP_SECRET;
-const DROPBOX_REFRESH_TOKEN = process.env.DROPBOX_REFRESH_TOKEN;
-const DROPBOX_FOLDER_PATH = process.env.DROPBOX_FOLDER_PATH || "/Product1";
+async function readJsonFile(path){
+  try{
+    const raw = await fs.readFile(path, "utf8");
+    return JSON.parse(raw);
+  }catch{
+    return null;
+  }
+}
+
+function parseJsonEnv(name){
+  const raw = process.env[name];
+  if(!raw) return null;
+  try{
+    return JSON.parse(raw);
+  }catch(err){
+    throw new Error(`Invalid JSON in env var ${name}: ${err.message}`);
+  }
+}
+
+const jsonConfigFromSecret = parseJsonEnv("DROPBOX_CONFIG_JSON");
+const jsonConfigFromFile = await readJsonFile(process.env.DROPBOX_CONFIG_PATH || "Product1/dropbox-config.json");
+const resolvedConfig = jsonConfigFromSecret || jsonConfigFromFile || {};
+
+const DROPBOX_APP_KEY = process.env.DROPBOX_APP_KEY || resolvedConfig.appKey;
+const DROPBOX_APP_SECRET = process.env.DROPBOX_APP_SECRET || resolvedConfig.appSecret;
+const DROPBOX_REFRESH_TOKEN = process.env.DROPBOX_REFRESH_TOKEN || resolvedConfig.refreshToken;
+const DROPBOX_FOLDER_PATH = process.env.DROPBOX_FOLDER_PATH || resolvedConfig.folderPath || "/Product1";
 
 const OUTPUT_PATH = process.env.OUTPUT_PATH || "Product1/gallery.json";
 const MAX_IMAGES = parseInt(process.env.MAX_IMAGES || "200", 10);

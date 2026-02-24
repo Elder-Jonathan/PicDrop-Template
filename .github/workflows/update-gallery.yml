@@ -22,13 +22,14 @@ jobs:
 
       - name: Generate gallery.json from Dropbox
         env:
+          DROPBOX_CONFIG_JSON: ${{ secrets.DROPBOX_CONFIG_JSON }}
           DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
           DROPBOX_APP_SECRET: ${{ secrets.DROPBOX_APP_SECRET }}
           DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
           DROPBOX_FOLDER_PATH: ${{ secrets.DROPBOX_FOLDER_PATH }}
           OUTPUT_PATH: "Product1/gallery.json"
           MAX_IMAGES: "200"
-        run: node scripts/update-gallery.mjs
+        run: node Product1/scripts/update-gallery.mjs
 
       - name: Commit and push if changed
         run: |

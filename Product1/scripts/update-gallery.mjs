@@ -26,6 +26,7 @@ const resolvedConfig = jsonConfigFromSecret || jsonConfigFromFile || {};
 const DROPBOX_APP_KEY = process.env.DROPBOX_APP_KEY || resolvedConfig.appKey;
 const DROPBOX_APP_SECRET = process.env.DROPBOX_APP_SECRET || resolvedConfig.appSecret;
 const DROPBOX_REFRESH_TOKEN = process.env.DROPBOX_REFRESH_TOKEN || resolvedConfig.refreshToken;
+const DROPBOX_ACCESS_TOKEN = process.env.DROPBOX_ACCESS_TOKEN || resolvedConfig.accessToken;
 const DROPBOX_FOLDER_PATH = process.env.DROPBOX_FOLDER_PATH || resolvedConfig.folderPath || "/Product1";
 
 const OUTPUT_PATH = process.env.OUTPUT_PATH || "Product1/gallery.json";
@@ -42,7 +43,7 @@ function toRaw(link){
   return link.includes("?") ? (link.includes("raw=1") ? link : link + "&raw=1") : (link + "?raw=1");
 }
 
-async function getAccessToken(){
+async function requestAccessTokenFromRefreshToken(){
   assertEnv("DROPBOX_APP_KEY", DROPBOX_APP_KEY);
   assertEnv("DROPBOX_APP_SECRET", DROPBOX_APP_SECRET);
   assertEnv("DROPBOX_REFRESH_TOKEN", DROPBOX_REFRESH_TOKEN);
@@ -67,6 +68,14 @@ async function getAccessToken(){
   }
   const data = await res.json();
   return data.access_token;
+}
+
+async function getAccessToken(){
+  if(DROPBOX_ACCESS_TOKEN){
+    return DROPBOX_ACCESS_TOKEN;
+  }
+
+  return requestAccessTokenFromRefreshToken();
 }
 
 async function dbxPost(accessToken, endpoint, bodyObj){
@@ -113,9 +122,28 @@ async function getOrCreateSharedLink(accessToken, filePath){
   return created.url;
 }
 
+function canFallbackToRefreshToken(err){
+  if(!DROPBOX_ACCESS_TOKEN) return false;
+  if(!DROPBOX_APP_KEY || !DROPBOX_APP_SECRET || !DROPBOX_REFRESH_TOKEN) return false;
+
+  const msg = String(err && err.message ? err.message : err);
+  return msg.includes(" 401 ") || msg.includes("invalid_access_token") || msg.includes("expired_access_token");
+}
+
 async function main(){
-  const token = await getAccessToken();
-  const entries = await listAllFiles(token, DROPBOX_FOLDER_PATH);
+  let token = await getAccessToken();
+  let usedRefreshFallback = false;
+
+  let entries;
+  try{
+    entries = await listAllFiles(token, DROPBOX_FOLDER_PATH);
+  }catch(err){
+    if(!canFallbackToRefreshToken(err)) throw err;
+    console.warn("Provided DROPBOX_ACCESS_TOKEN failed; falling back to refresh-token OAuth flow.");
+    token = await requestAccessTokenFromRefreshToken();
+    usedRefreshFallback = true;
+    entries = await listAllFiles(token, DROPBOX_FOLDER_PATH);
+  }
 
   const files = entries
     .filter(e => e[".tag"] === "file")
@@ -138,7 +166,7 @@ async function main(){
 
   await fs.mkdir(OUTPUT_PATH.split("/").slice(0,-1).join("/") || ".", { recursive: true });
   await fs.writeFile(OUTPUT_PATH, JSON.stringify(payload, null, 2), "utf8");
-  console.log(`Wrote ${urls.length} image URLs to ${OUTPUT_PATH}`);
+  console.log(`Wrote ${urls.length} image URLs to ${OUTPUT_PATH}${usedRefreshFallback ? " (refresh fallback used)" : ""}`);
 }
 
 main().catch(err => { console.error(err); process.exit(1); });

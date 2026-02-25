@@ -61,3 +61,15 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Authors
 - Elder-Jonathan
+
+## Troubleshooting photos not loading
+If uploads appear in Dropbox but not on the page:
+
+1. Run the gallery generator manually once (GitHub Actions → **Update Product1 Gallery Manifest** → **Run workflow**).
+2. Confirm `Product1/gallery.json` now has non-empty `images` (and optional `items`) entries.
+3. Make sure your Dropbox folder path includes all image subfolders. The generator now scans recursively.
+4. If links exist but images still fail, regenerate links by rerunning the workflow so each URL is written with `raw=1`.
+
+The Product1 frontend accepts either manifest shape:
+- `images: ["https://..."]`
+- `items: [{ "url": "https://..." }]` (or both)

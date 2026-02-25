@@ -562,9 +562,15 @@
       const res = await fetch(manifestUrl, { cache: "no-store" });
       if(!res.ok) throw new Error(`Manifest HTTP ${res.status}`);
       const data = await res.json();
-      // expected: { "images": ["https://...raw=1", ...] }
-      const imgs = Array.isArray(data.images) ? data.images : [];
-      return imgs.filter(u => typeof u === "string" && u.startsWith("http"));
+
+      const directImages = Array.isArray(data.images) ? data.images : [];
+      const itemImages = Array.isArray(data.items)
+        ? data.items.map((item) => item && item.url)
+        : [];
+
+      return [...directImages, ...itemImages]
+        .filter((u) => typeof u === "string" && /^https?:\/\//i.test(u))
+        .filter((u, i, all) => all.indexOf(u) === i);
     }
 
     async function init(){

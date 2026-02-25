@@ -38,9 +38,25 @@ function isImage(name){
   return n.endsWith(".jpg") || n.endsWith(".jpeg") || n.endsWith(".png") || n.endsWith(".webp") || n.endsWith(".gif");
 }
 function toRaw(link){
-  if(link.includes("dl=0")) return link.replace("dl=0", "raw=1");
-  if(link.includes("dl=1")) return link.replace("dl=1", "raw=1");
-  return link.includes("?") ? (link.includes("raw=1") ? link : link + "&raw=1") : (link + "?raw=1");
+  if(!link) return "";
+
+  try{
+    const u = new URL(link);
+
+    // Dropbox shared links render an HTML wrapper page unless raw=1 is set.
+    if(u.hostname === "www.dropbox.com"){
+      u.searchParams.delete("dl");
+      u.searchParams.set("raw", "1");
+      return u.toString();
+    }
+
+    // Already a direct content host (usually dl.dropboxusercontent.com).
+    return u.toString();
+  }catch{
+    if(link.includes("dl=0")) return link.replace("dl=0", "raw=1");
+    if(link.includes("dl=1")) return link.replace("dl=1", "raw=1");
+    return link.includes("?") ? (link.includes("raw=1") ? link : link + "&raw=1") : (link + "?raw=1");
+  }
 }
 
 async function requestAccessTokenFromRefreshToken(){
@@ -95,7 +111,7 @@ async function dbxPost(accessToken, endpoint, bodyObj){
 async function listAllFiles(accessToken, path){
   let out = await dbxPost(accessToken, "files/list_folder", {
     path,
-    recursive: false,
+    recursive: true,
     include_deleted: false,
     include_non_downloadable_files: false
   });
@@ -151,22 +167,35 @@ async function main(){
     .sort((a,b) => new Date(b.server_modified || 0) - new Date(a.server_modified || 0))
     .slice(0, MAX_IMAGES);
 
-  const urls = [];
+  const images = [];
   for(const f of files){
     const path = f.path_lower || f.path_display;
-    const shared = await getOrCreateSharedLink(token, path);
-    urls.push(toRaw(shared));
+    if(!path) continue;
+
+    try{
+      const shared = await getOrCreateSharedLink(token, path);
+      images.push({
+        name: f.name,
+        path,
+        modifiedAt: f.server_modified || null,
+        url: toRaw(shared)
+      });
+    }catch(err){
+      console.warn(`Skipping ${f.name}: ${err.message}`);
+    }
   }
 
   const payload = {
     generatedAt: new Date().toISOString(),
     dropboxFolderPath: DROPBOX_FOLDER_PATH,
-    images: urls
+    imageCount: images.length,
+    images: images.map((i) => i.url),
+    items: images
   };
 
   await fs.mkdir(OUTPUT_PATH.split("/").slice(0,-1).join("/") || ".", { recursive: true });
   await fs.writeFile(OUTPUT_PATH, JSON.stringify(payload, null, 2), "utf8");
-  console.log(`Wrote ${urls.length} image URLs to ${OUTPUT_PATH}${usedRefreshFallback ? " (refresh fallback used)" : ""}`);
+  console.log(`Wrote ${images.length} image URLs to ${OUTPUT_PATH}${usedRefreshFallback ? " (refresh fallback used)" : ""}`);
 }
 
 main().catch(err => { console.error(err); process.exit(1); });

@@ -20,16 +20,16 @@ function parseJsonEnv(name){
 }
 
 const jsonConfigFromSecret = parseJsonEnv("DROPBOX_CONFIG_JSON");
-const jsonConfigFromFile = await readJsonFile(process.env.DROPBOX_CONFIG_PATH || "Product1/dropbox-config.json");
+const jsonConfigFromFile = await readJsonFile(process.env.DROPBOX_CONFIG_PATH || "PicDropUploads/Product1/dropbox-config.json");
 const resolvedConfig = jsonConfigFromSecret || jsonConfigFromFile || {};
 
 const DROPBOX_APP_KEY = process.env.DROPBOX_APP_KEY || resolvedConfig.appKey;
 const DROPBOX_APP_SECRET = process.env.DROPBOX_APP_SECRET || resolvedConfig.appSecret;
 const DROPBOX_REFRESH_TOKEN = process.env.DROPBOX_REFRESH_TOKEN || resolvedConfig.refreshToken;
 const DROPBOX_ACCESS_TOKEN = process.env.DROPBOX_ACCESS_TOKEN || resolvedConfig.accessToken;
-const DROPBOX_FOLDER_PATH = process.env.DROPBOX_FOLDER_PATH || resolvedConfig.folderPath || "/Product1";
+const DROPBOX_FOLDER_PATH = process.env.DROPBOX_FOLDER_PATH || resolvedConfig.folderPath || "/PicDropUploads/Product1";
 
-const OUTPUT_PATH = process.env.OUTPUT_PATH || "Product1/gallery.json";
+const OUTPUT_PATH = process.env.OUTPUT_PATH || "PicDropUploads/Product1/gallery.json";
 const MAX_IMAGES = parseInt(process.env.MAX_IMAGES || "200", 10);
 
 function assertEnv(name, val){ if(!val) throw new Error(`Missing env var: ${name}`); }

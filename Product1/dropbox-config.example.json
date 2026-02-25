@@ -3,5 +3,5 @@
   "appSecret": "YOUR_DROPBOX_APP_SECRET",
   "refreshToken": "YOUR_DROPBOX_REFRESH_TOKEN",
   "accessToken": "YOUR_DROPBOX_ACCESS_TOKEN",
-  "folderPath": "/Product1"
+  "folderPath": "/PicDropUploads"
 }

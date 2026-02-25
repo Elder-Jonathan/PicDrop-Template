@@ -301,12 +301,11 @@
     "brand": "PicDrop",
     "subtitle": "Tap • Upload • Share",
     "logoPngPath": "../Assets/picdrop-logo.svg",
-    "uploadUrl": "https://www.dropbox.com/scl/fo/wgiod5sln38d0ym268nuh/ADoSJVQHy0EPQ1e_OM4V4Ks?rlkey=tfhfj89n5htlstruhwt8vhtb2&st=wu6qikxy&dl=0",
-    "viewUrl":   "https://www.dropbox.com/scl/fo/wgiod5sln38d0ym268nuh/ADoSJVQHy0EPQ1e_OM4V4Ks?rlkey=z26itm54dzsn3cin9ufgc2amd&st=wu6qikxy&dl=0",
+    "appBotUrl": "PASTE_APP_BOT_LINK_HERE",
     "notes": [
-      "Tap Upload to add photos/videos from your phone.",
+      "Tap Upload to open the PicDrop app bot.",
       "Wi-Fi is best for videos.",
-      "Tap View to see what’s already been uploaded."
+      "Tap View to browse photos in the app bot."
     ],
     "carousel": {
       "maxSlides": 10,
@@ -334,7 +333,7 @@
 
     <section class="card hero">
       <h1>PicDrop</h1>
-      <p>Tap Upload to add your photos/videos. Tap View to see what’s already been uploaded.</p>
+      <p>Tap Upload or View to open the PicDrop app bot for sharing and browsing photos.</p>
 
       <div class="actions">
         <a id="uploadBtn" class="btn btnPrimary" href="#" target="_blank" rel="noopener">Upload</a>
@@ -353,7 +352,7 @@
       <section class="card">
         <div class="pill">Random photos</div>
         <p class="statusLine" style="margin:10px 0 10px;">
-          This automatically pulls from the Product1 Dropbox folder via an auto-updated manifest.
+          This automatically pulls from the Product1 gallery manifest.
         </p>
         <div id="carousel" class="carousel" aria-label="Photo carousel"></div>
       </section>
@@ -361,8 +360,8 @@
       <section class="card">
         <div class="pill">Status</div>
         <p class="statusLine" style="margin:10px 0 0;">
-          • Upload link: <span id="uploadOk">—</span><br/>
-          • View link: <span id="viewOk">—</span><br/>
+          • App bot upload: <span id="uploadOk">—</span><br/>
+          • App bot view: <span id="viewOk">—</span><br/>
           • Manifest: <span id="manifestOk">—</span>
         </p>
       </section>
@@ -589,10 +588,11 @@
         notes.appendChild(li);
       });
 
-      const upOk = setHref($("#uploadBtn"), cfg.uploadUrl || "");
-      const vwOk = setHref($("#viewBtn"), cfg.viewUrl || "");
-      setHref($("#bbUpload"), cfg.uploadUrl || "");
-      setHref($("#bbView"), cfg.viewUrl || "");
+      const appBotUrl = cfg.appBotUrl || cfg.uploadUrl || cfg.viewUrl || "";
+      const upOk = setHref($("#uploadBtn"), appBotUrl);
+      const vwOk = setHref($("#viewBtn"), appBotUrl);
+      setHref($("#bbUpload"), appBotUrl);
+      setHref($("#bbView"), appBotUrl);
 
       $("#uploadOk").textContent = upOk ? "set" : "missing";
       $("#viewOk").textContent = vwOk ? "set" : "missing";
@@ -604,7 +604,7 @@
       $("#bbCopy").onclick = () => copyText(sharePayload.url);
       $("#copyBtn").onclick = () => copyText(sharePayload.url);
       $("#copyUploadBtn").onclick = () => {
-        const u = safeUrl(cfg.uploadUrl || "");
+        const u = safeUrl(appBotUrl);
         if(!u){ toast("Upload link not set"); return; }
         copyText(u);
       };

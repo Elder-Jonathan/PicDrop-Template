@@ -27,7 +27,7 @@ const DROPBOX_APP_KEY = process.env.DROPBOX_APP_KEY || resolvedConfig.appKey;
 const DROPBOX_APP_SECRET = process.env.DROPBOX_APP_SECRET || resolvedConfig.appSecret;
 const DROPBOX_REFRESH_TOKEN = process.env.DROPBOX_REFRESH_TOKEN || resolvedConfig.refreshToken;
 const DROPBOX_ACCESS_TOKEN = process.env.DROPBOX_ACCESS_TOKEN || resolvedConfig.accessToken;
-const DROPBOX_FOLDER_PATH = process.env.DROPBOX_FOLDER_PATH || resolvedConfig.folderPath || "/Product1";
+const DROPBOX_FOLDER_PATH = process.env.DROPBOX_FOLDER_PATH || resolvedConfig.folderPath || "/PicDropUploads";
 
 const OUTPUT_PATH = process.env.OUTPUT_PATH || "Product1/gallery.json";
 const MAX_IMAGES = parseInt(process.env.MAX_IMAGES || "200", 10);

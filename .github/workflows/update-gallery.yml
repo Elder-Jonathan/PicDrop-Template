@@ -1,4 +1,4 @@
-name: Update Product1 Gallery Manifest
+name: Update PicDropUploads/Product1 Gallery Manifest
 
 on:
   workflow_dispatch:
@@ -28,13 +28,13 @@ jobs:
           DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
           DROPBOX_ACCESS_TOKEN: ${{ secrets.DROPBOX_ACCESS_TOKEN }}
           DROPBOX_FOLDER_PATH: ${{ secrets.DROPBOX_FOLDER_PATH }}
-          OUTPUT_PATH: "Product1/gallery.json"
+          OUTPUT_PATH: "PicDropUploads/Product1/gallery.json"
           MAX_IMAGES: "200"
-        run: node Product1/scripts/update-gallery.mjs
+        run: node PicDropUploads/Product1/scripts/update-gallery.mjs
 
       - name: Commit and push if changed
         run: |
           git config user.name "picdrop-bot"
           git config user.email "picdrop-bot@users.noreply.github.com"
-          git add Product1/gallery.json
-          git diff --cached --quiet || (git commit -m "Update Product1 gallery manifest" && git push)
+          git add PicDropUploads/Product1/gallery.json
+          git diff --cached --quiet || (git commit -m "Update PicDropUploads/Product1 gallery manifest" && git push)

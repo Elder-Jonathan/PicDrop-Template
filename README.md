@@ -42,7 +42,7 @@ npm install
      "appSecret": "YOUR_DROPBOX_APP_SECRET",
      "refreshToken": "YOUR_DROPBOX_REFRESH_TOKEN",
      "accessToken": "YOUR_DROPBOX_ACCESS_TOKEN",
-     "folderPath": "/Product1"
+     "folderPath": "/PicDropUploads/Product1"
    }
    ```
 
@@ -52,9 +52,9 @@ npm install
 - `DROPBOX_REFRESH_TOKEN`
 - `DROPBOX_ACCESS_TOKEN` (optional; useful for quick testing, but Dropbox access tokens expire)
 - `DROPBOX_APP_KEY` + `DROPBOX_APP_SECRET` + `DROPBOX_REFRESH_TOKEN` are recommended for reliable scheduled runs (workflow auto-refreshes access tokens)
-- `DROPBOX_FOLDER_PATH` (optional; defaults to `/Product1`)
+- `DROPBOX_FOLDER_PATH` (optional; defaults to `/PicDropUploads/Product1`)
 
-For local testing, copy `Product1/dropbox-config.example.json` to `Product1/dropbox-config.json` and fill values. The script reads that file automatically when env vars/secrets are not set.
+For local testing, copy `PicDropUploads/Product1/dropbox-config.example.json` to `PicDropUploads/Product1/dropbox-config.json` and fill values. The script reads that file automatically when env vars/secrets are not set.
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
